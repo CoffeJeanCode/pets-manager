@@ -9,7 +9,8 @@ public interface Theme {
 
     List<Theme> SUPPORTED_THEMES = List.of(
             new LightTheme(),
-            new DarkTheme()
+            new DarkTheme(),
+            new OrangeTheme()
     );
 
     String THEME_DIR = STYLES_DIR + "theme/";

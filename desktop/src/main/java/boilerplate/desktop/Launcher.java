@@ -27,18 +27,30 @@ public class Launcher extends Application {
         Image appIcon = new Image(getResourceAsStream(ASSETS_DIR + "app-icon.png"));
 
         MainWindow mainWindow = new MainWindow();
-        Scene scene = new Scene(mainWindow, 1024, 720);
-        scene.getStylesheets().addAll(
-                FONTS_DIR + "index.css",
-                STYLES_DIR + "index.css"
-        );
+        Scene scene = new Scene(mainWindow, 1400, 900);
+        
+        // Load CSS files using proper resource paths
+        try {
+            String fontsCss = getClass().getResource(FONTS_DIR + "index.css").toExternalForm();
+            String stylesCss = getClass().getResource(STYLES_DIR + "index.css").toExternalForm();
+            scene.getStylesheets().addAll(fontsCss, stylesCss);
+        } catch (Exception e) {
+            // If CSS files don't exist, continue without them (they're optional)
+            System.err.println("Warning: Could not load CSS files: " + e.getMessage());
+        }
 
         stage.setScene(scene);
         stage.setTitle(System.getProperty("app.name"));
         stage.getIcons().add(appIcon);
-        stage.setResizable(false);
-        mainWindow.selectTheme(SUPPORTED_THEMES.get(0));
+        stage.setResizable(true);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(600);
         stage.setOnCloseRequest(t -> Platform.exit());
+        
+        // Apply initial theme after scene is set
+        Platform.runLater(() -> {
+            mainWindow.selectTheme(SUPPORTED_THEMES.get(0));
+        });
 
         Platform.runLater(() -> {
             stage.show();

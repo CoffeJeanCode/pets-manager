@@ -1,3 +1,294 @@
 .root {
-    -fx-base: rgb(255,255,255);
+    /* Light theme with flat UI design */
+    -fx-base: rgb(255, 255, 255);
+    -fx-accent: rgb(59, 130, 246);
+    -fx-focus-color: rgb(96, 165, 250);
+
+    -fx-control-inner-background: rgb(249, 250, 251);
+    -fx-control-inner-background-alt: rgb(249, 250, 251);
+
+    /* Text colors */
+    -fx-light-text-color: rgb(15, 23, 42);
+    -fx-mid-text-color: rgb(51, 65, 85);
+    -fx-dark-text-color: rgb(15, 23, 42);
+    
+    /* Background colors */
+    -fx-background: rgb(255, 255, 255);
+    -fx-color: rgb(249, 250, 251);
+    
+    /* Text colors */
+    -fx-text-background-color: rgb(15, 23, 42);
+    -fx-text-inner-color: rgb(51, 65, 85);
+}
+
+/* Flat UI - Text Fields */
+.text-field {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.text-field:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+/* Colorful Form Grid Override - Light Theme */
+.form-grid .text-field,
+.form-grid .combo-box,
+.form-grid .date-picker,
+.form-grid .text-area,
+.form-grid .spinner,
+.form-input {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(59, 130, 246);
+}
+
+.form-grid .text-field:hover,
+.form-grid .combo-box:hover,
+.form-grid .date-picker:hover,
+.form-grid .text-area:hover,
+.form-input:hover {
+    -fx-border-color: rgb(37, 99, 235);
+    -fx-background-color: rgb(249, 250, 251);
+}
+
+.form-grid .text-field:focused,
+.form-grid .combo-box:focused,
+.form-grid .date-picker:focused,
+.form-grid .text-area:focused,
+.form-input:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+.form-grid .text-field .prompt-text,
+.form-grid .text-area .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.8;
+}
+
+.form-label {
+    -fx-text-fill: rgb(30, 41, 59);
+}
+
+/* Placeholder text with high contrast */
+.text-field .text-input {
+    -fx-text-fill: rgb(15, 23, 42);
+}
+
+.text-field .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.8;
+}
+
+/* Flat UI - Combo Box */
+.combo-box {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.combo-box:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+.combo-box .list-view {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+}
+
+.combo-box .list-cell {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-padding: 10 14;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgb(241, 245, 249);
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgb(15, 23, 42);
+}
+
+/* Flat UI - Date Picker */
+.date-picker {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.date-picker:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+/* Flat UI - Text Area */
+.text-area {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.text-area:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+.text-area .text-input {
+    -fx-text-fill: rgb(15, 23, 42);
+}
+
+.text-area .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.8;
+}
+
+/* Flat UI - Buttons */
+.button {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: none;
+}
+
+.button:hover {
+    -fx-background-color: rgb(241, 245, 249);
+    -fx-border-color: rgb(203, 213, 225);
+}
+
+.button:focused {
+    -fx-background-color: rgb(59, 130, 246);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 8, 0, 0, 2);
+}
+
+/* Flat UI - Table */
+.table-view {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-background-color: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-effect: none;
+}
+
+.table-view .column-header {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-background-color: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-background-color: rgb(15, 23, 42);
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: rgb(249, 250, 251);
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgb(219, 234, 254);
+    -fx-text-background-color: rgb(15, 23, 42);
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgb(241, 245, 249);
+}
+
+/* Flat UI - Scrollbar */
+.scroll-bar {
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgb(203, 213, 225);
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgb(148, 163, 184);
+}
+
+/* Flat UI - Tabs */
+.tab {
+    -fx-background-color: rgb(249, 250, 251);
+    -fx-text-fill: rgb(51, 65, 85);
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+.tab:selected {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-border-width: 0 0 3 0;
+}
+
+/* Remove outline from tab label when selected */
+.tab:selected .tab-label {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+}
+
+.tab:selected:focused .tab-label {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-effect: none;
+}
+
+/* Flat UI - Dialog */
+.dialog-pane {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgb(15, 23, 42);
+    -fx-border-color: rgb(226, 232, 240);
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 4);
+}
+
+.dialog-pane .label {
+    -fx-text-fill: rgb(15, 23, 42);
 }

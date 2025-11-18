@@ -1,12 +1,321 @@
 .root {
-    -fx-base: rgb(10, 10, 8);
-    -fx-accent: rgb(36, 53, 206);
-    -fx-focus-color: -fx-accent;
+    /* Dark blue base color with better contrast - Slate 900/800 inspired */
+    -fx-base: rgb(15, 23, 42);
+    -fx-accent: rgb(59, 130, 246);
+    -fx-focus-color: rgb(96, 165, 250);
 
-    -fx-control-inner-background: derive(-fx-base, 35%);
-    -fx-control-inner-background-alt: -fx-control-inner-background;
+    -fx-control-inner-background: rgb(30, 41, 59);
+    -fx-control-inner-background-alt: rgb(30, 41, 59);
 
-    -fx-light-text-color: rgb(220,220,220);
-    -fx-mid-text-color: rgb(100,100,100);
-    -fx-dark-text-color: rgb(20,20,20);
+    /* High contrast text colors - Slate 50/200 */
+    -fx-light-text-color: rgb(248, 250, 252);
+    -fx-mid-text-color: rgb(203, 213, 225);
+    -fx-dark-text-color: rgb(15, 23, 42);
+    
+    /* Background colors */
+    -fx-background: rgb(15, 23, 42);
+    -fx-color: rgb(30, 41, 59);
+    
+    /* Text colors with high contrast */
+    -fx-text-background-color: rgb(248, 250, 252);
+    -fx-text-inner-color: rgb(203, 213, 225);
+}
+
+/* Flat UI - Table */
+.table-view {
+    -fx-background-color: rgb(15, 23, 42);
+    -fx-text-background-color: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-effect: none;
+}
+
+.table-view .column-header {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-background-color: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: rgb(15, 23, 42);
+    -fx-text-background-color: rgb(248, 250, 252);
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: rgb(20, 30, 48);
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgb(30, 64, 175);
+    -fx-text-background-color: rgb(248, 250, 252);
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgb(37, 99, 235);
+    -fx-text-background-color: rgb(248, 250, 252);
+}
+
+/* Flat UI - Buttons */
+.button {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: none;
+}
+
+.button:hover {
+    -fx-background-color: rgb(37, 99, 235);
+    -fx-border-color: rgb(37, 99, 235);
+}
+
+.button:focused {
+    -fx-background-color: rgb(59, 130, 246);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 8, 0, 0, 2);
+}
+
+/* Colorful Form Grid Override - Dark Theme */
+.form-grid .text-field,
+.form-grid .combo-box,
+.form-grid .date-picker,
+.form-grid .text-area,
+.form-grid .spinner,
+.form-input {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(59, 130, 246);
+}
+
+.form-grid .text-field:hover,
+.form-grid .combo-box:hover,
+.form-grid .date-picker:hover,
+.form-grid .text-area:hover,
+.form-input:hover {
+    -fx-border-color: rgb(96, 165, 250);
+    -fx-background-color: rgb(37, 47, 63);
+}
+
+.form-grid .text-field:focused,
+.form-grid .combo-box:focused,
+.form-grid .date-picker:focused,
+.form-grid .text-area:focused,
+.form-input:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(37, 47, 63);
+}
+
+.form-grid .text-field .prompt-text,
+.form-grid .text-area .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.9;
+}
+
+.form-label {
+    -fx-text-fill: rgb(226, 232, 240);
+}
+
+/* Flat UI - Text Fields with high contrast placeholder */
+.text-field {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.text-field:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+/* High contrast placeholder text for dark theme */
+.text-field .text-input {
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+.text-field .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.9;
+}
+
+/* Flat UI - Combo Box */
+.combo-box {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.combo-box:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+.combo-box .list-view {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
+}
+
+.combo-box .list-cell {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-padding: 10 14;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgb(37, 99, 235);
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+/* Flat UI - Date Picker */
+.date-picker {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.date-picker:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+/* Flat UI - Text Area */
+.text-area {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-effect: none;
+}
+
+.text-area:focused {
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.15), 6, 0, 0, 2);
+}
+
+.text-area .text-input {
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+.text-area .prompt-text {
+    -fx-text-fill: rgb(148, 163, 184);
+    -fx-opacity: 0.9;
+}
+
+/* Flat UI - Dialog */
+.dialog-pane {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(51, 65, 85);
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 4);
+}
+
+.dialog-pane .label {
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+/* Flat UI - Tabs */
+.tab {
+    -fx-background-color: rgb(30, 41, 59);
+    -fx-text-fill: rgb(203, 213, 225);
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-effect: none;
+}
+
+.tab:selected {
+    -fx-background-color: rgb(15, 23, 42);
+    -fx-text-fill: rgb(248, 250, 252);
+    -fx-border-color: rgb(59, 130, 246);
+    -fx-border-width: 0 0 3 0;
+}
+
+/* Remove outline from tab label when selected */
+.tab:selected .tab-label {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+}
+
+.tab:selected:focused .tab-label {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-effect: none;
+}
+
+/* Enhanced menu and context menu */
+.context-menu {
+    -fx-background-color: rgb(30, 41, 59);
+}
+
+.context-menu .menu-item {
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: rgb(37, 99, 235);
+}
+
+/* Enhanced scrollbar for dark mode */
+.scroll-bar {
+    -fx-background-color: rgb(15, 23, 42);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgb(51, 65, 85);
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgb(71, 85, 105);
+}
+
+/* Enhanced status badges with better contrast */
+.status-available {
+    -fx-background-color: rgb(34, 197, 94);
+    -fx-text-fill: rgb(15, 23, 42);
+}
+
+.status-adopted {
+    -fx-background-color: rgb(59, 130, 246);
+    -fx-text-fill: rgb(248, 250, 252);
+}
+
+.status-in-process {
+    -fx-background-color: rgb(251, 146, 60);
+    -fx-text-fill: rgb(15, 23, 42);
 }

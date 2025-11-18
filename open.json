@@ -1,0 +1,3368 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PETS-BACKEND-FASTAPI",
+    "description": "API con FastAPI y PostgreSQL",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/pets": {
+      "get": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Get All",
+        "description": "Obtiene todos los pets con filtros opcionales\n\n- **skip**: Número de registros a saltar (paginación)\n- **limit**: Número máximo de registros a retornar\n- **species**: Filtrar por especie (ej: dog, cat, rabbit)\n- **adoption_status**: Filtrar por estado (available, adopted, in_process)",
+        "operationId": "get_all_api_v1_pets_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Número de registros a saltar",
+              "default": 0,
+              "title": "Skip"
+            },
+            "description": "Número de registros a saltar"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Número máximo de registros",
+              "default": 100,
+              "title": "Limit"
+            },
+            "description": "Número máximo de registros"
+          },
+          {
+            "name": "species",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por especie",
+              "title": "Species"
+            },
+            "description": "Filtrar por especie"
+          },
+          {
+            "name": "adoption_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por estado de adopción",
+              "title": "Adoption Status"
+            },
+            "description": "Filtrar por estado de adopción"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetResponse"
+                  },
+                  "title": "Response Get All Api V1 Pets Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Create",
+        "description": "Crea nuevo pet\n\nCrea un nuevo registro de mascota con validaciones de negocio.\nValida que el microchip sea único si se proporciona.",
+        "operationId": "create_api_v1_pets_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pets/available": {
+      "get": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Get Available",
+        "description": "Obtiene solo los pets disponibles para adopción\n\nRetorna únicamente los pets con estado \"available\"",
+        "operationId": "get_available_api_v1_pets_available_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetResponse"
+                  },
+                  "title": "Response Get Available Api V1 Pets Available Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pets/{id}": {
+      "get": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Get By Id",
+        "description": "Obtiene pet por ID\n\n- **id**: ID del pet a obtener",
+        "operationId": "get_by_id_api_v1_pets__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Update",
+        "description": "Actualiza pet\n\nActualiza los campos especificados de un pet existente.\nNo permite cambiar el estado de un pet ya adoptado.",
+        "operationId": "update_api_v1_pets__id__put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Delete",
+        "description": "Elimina pet\n\nElimina un pet. No permite eliminar pets con solicitudes de adopción activas.",
+        "operationId": "delete_api_v1_pets__id__delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pets/count": {
+      "get": {
+        "tags": [
+          "pets",
+          "pets"
+        ],
+        "summary": "Count",
+        "description": "Cuenta total de pets con filtros opcionales\n\nRetorna el número total de pets, opcionalmente filtrado por especie y/o estado.",
+        "operationId": "count_api_v1_pets_count_get",
+        "parameters": [
+          {
+            "name": "species",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por especie",
+              "title": "Species"
+            },
+            "description": "Filtrar por especie"
+          },
+          {
+            "name": "adoption_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por estado",
+              "title": "Adoption Status"
+            },
+            "description": "Filtrar por estado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vaccines": {
+      "get": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Get All",
+        "description": "Obtiene todos los vaccines con filtro opcional\n\n- **skip**: Número de registros a saltar (paginación)\n- **limit**: Número máximo de registros a retornar\n- **pet_id**: Filtrar por ID de mascota",
+        "operationId": "get_all_api_v1_vaccines_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Número de registros a saltar",
+              "default": 0,
+              "title": "Skip"
+            },
+            "description": "Número de registros a saltar"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Número máximo de registros",
+              "default": 100,
+              "title": "Limit"
+            },
+            "description": "Número máximo de registros"
+          },
+          {
+            "name": "pet_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por ID de mascota",
+              "title": "Pet Id"
+            },
+            "description": "Filtrar por ID de mascota"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VaccineResponse"
+                  },
+                  "title": "Response Get All Api V1 Vaccines Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Create",
+        "description": "Crea nuevo vaccine\n\nCrea un nuevo registro de vacunación. Valida que el pet exista\ny que las fechas sean coherentes.",
+        "operationId": "create_api_v1_vaccines_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaccineCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaccineResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vaccines/pet/{pet_id}": {
+      "get": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Get By Pet",
+        "description": "Obtiene todos los vaccines de una mascota específica\n\n- **pet_id**: ID de la mascota",
+        "operationId": "get_by_pet_api_v1_vaccines_pet__pet_id__get",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Pet Id"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VaccineResponse"
+                  },
+                  "title": "Response Get By Pet Api V1 Vaccines Pet  Pet Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vaccines/{id}": {
+      "get": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Get By Id",
+        "description": "Obtiene vaccine por ID\n\n- **id**: ID del vaccine a obtener",
+        "operationId": "get_by_id_api_v1_vaccines__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaccineResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Update",
+        "description": "Actualiza vaccine\n\nActualiza los campos especificados de un registro de vacunación.",
+        "operationId": "update_api_v1_vaccines__id__put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VaccineUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VaccineResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Delete",
+        "description": "Elimina vaccine\n\nElimina un registro de vacunación.",
+        "operationId": "delete_api_v1_vaccines__id__delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vaccines/count": {
+      "get": {
+        "tags": [
+          "vaccines",
+          "vaccines"
+        ],
+        "summary": "Count",
+        "description": "Cuenta total de vaccines con filtro opcional\n\nRetorna el número total de registros de vacunación.",
+        "operationId": "count_api_v1_vaccines_count_get",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por ID de mascota",
+              "title": "Pet Id"
+            },
+            "description": "Filtrar por ID de mascota"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/donations": {
+      "get": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Get All",
+        "description": "Obtiene todas las donaciones con filtro opcional\n\n- **skip**: Número de registros a saltar (paginación)\n- **limit**: Número máximo de registros a retornar\n- **donation_type**: Filtrar por tipo de donación",
+        "operationId": "get_all_api_v1_donations_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Número de registros a saltar",
+              "default": 0,
+              "title": "Skip"
+            },
+            "description": "Número de registros a saltar"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Número máximo de registros",
+              "default": 100,
+              "title": "Limit"
+            },
+            "description": "Número máximo de registros"
+          },
+          {
+            "name": "donation_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por tipo (monetary, food, medicine, toys)",
+              "title": "Donation Type"
+            },
+            "description": "Filtrar por tipo (monetary, food, medicine, toys)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonationResponse"
+                  },
+                  "title": "Response Get All Api V1 Donations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Create",
+        "description": "Crea nueva donación\n\nCrea un nuevo registro de donación. Valida que:\n- Las donaciones monetarias tengan un monto\n- La referencia de transacción sea única\n- Los montos sean coherentes",
+        "operationId": "create_api_v1_donations_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/donations/{id}": {
+      "get": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Get By Id",
+        "description": "Obtiene donación por ID\n\n- **id**: ID de la donación a obtener",
+        "operationId": "get_by_id_api_v1_donations__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Update",
+        "description": "Actualiza donación\n\nActualiza los campos especificados de una donación.",
+        "operationId": "update_api_v1_donations__id__put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonationUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Delete",
+        "description": "Elimina donación\n\nElimina un registro de donación.",
+        "operationId": "delete_api_v1_donations__id__delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/donations/count": {
+      "get": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Count",
+        "description": "Cuenta total de donaciones con filtro opcional\n\nRetorna el número total de donaciones.",
+        "operationId": "count_api_v1_donations_count_get",
+        "parameters": [
+          {
+            "name": "donation_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por tipo",
+              "title": "Donation Type"
+            },
+            "description": "Filtrar por tipo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/donations/total": {
+      "get": {
+        "tags": [
+          "donations",
+          "donations"
+        ],
+        "summary": "Get Total",
+        "description": "Obtiene el monto total de donaciones recibidas\n\nRetorna la suma de todos los montos recibidos (amount_received).\nSolo aplica para donaciones monetarias.",
+        "operationId": "get_total_api_v1_donations_total_get",
+        "parameters": [
+          {
+            "name": "donation_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por tipo (solo para donaciones monetarias)",
+              "title": "Donation Type"
+            },
+            "description": "Filtrar por tipo (solo para donaciones monetarias)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/adoption_aplication": {
+      "get": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Get All",
+        "description": "Obtiene todas las solicitudes de adopción con filtros opcionales\n\n- **skip**: Número de registros a saltar (paginación)\n- **limit**: Número máximo de registros a retornar\n- **pet_id**: Filtrar por ID de mascota\n- **status**: Filtrar por estado de la solicitud",
+        "operationId": "get_all_api_v1_adoption_aplication_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Número de registros a saltar",
+              "default": 0,
+              "title": "Skip"
+            },
+            "description": "Número de registros a saltar"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Número máximo de registros",
+              "default": 100,
+              "title": "Limit"
+            },
+            "description": "Número máximo de registros"
+          },
+          {
+            "name": "pet_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por ID de mascota",
+              "title": "Pet Id"
+            },
+            "description": "Filtrar por ID de mascota"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por estado (pending, approved, rejected)",
+              "title": "Status"
+            },
+            "description": "Filtrar por estado (pending, approved, rejected)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdoptionAplicationResponse"
+                  },
+                  "title": "Response Get All Api V1 Adoption Aplication Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Create",
+        "description": "Crea nueva solicitud de adopción\n\nCrea una nueva solicitud de adopción. Valida que:\n- El pet exista y esté disponible\n- No exista una solicitud activa del mismo email para el mismo pet",
+        "operationId": "create_api_v1_adoption_aplication_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdoptionAplicationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionAplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/adoption_aplication/pet/{pet_id}": {
+      "get": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Get By Pet",
+        "description": "Obtiene todas las solicitudes de adopción de una mascota específica\n\n- **pet_id**: ID de la mascota",
+        "operationId": "get_by_pet_api_v1_adoption_aplication_pet__pet_id__get",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Pet Id"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdoptionAplicationResponse"
+                  },
+                  "title": "Response Get By Pet Api V1 Adoption Aplication Pet  Pet Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/adoption_aplication/{id}": {
+      "get": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Get By Id",
+        "description": "Obtiene solicitud de adopción por ID\n\n- **id**: ID de la solicitud a obtener",
+        "operationId": "get_by_id_api_v1_adoption_aplication__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionAplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Update",
+        "description": "Actualiza solicitud de adopción\n\nActualiza los campos especificados de una solicitud de adopción.\nSi se aprueba una solicitud, el estado del pet cambia a \"in_process\".",
+        "operationId": "update_api_v1_adoption_aplication__id__put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdoptionAplicationUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionAplicationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Delete",
+        "description": "Elimina solicitud de adopción\n\nElimina una solicitud de adopción. No permite eliminar solicitudes aprobadas.",
+        "operationId": "delete_api_v1_adoption_aplication__id__delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/adoption_aplication/count": {
+      "get": {
+        "tags": [
+          "adoption_applications",
+          "adoption_applications"
+        ],
+        "summary": "Count",
+        "description": "Cuenta total de solicitudes de adopción con filtros opcionales\n\nRetorna el número total de solicitudes, opcionalmente filtrado por pet y/o estado.",
+        "operationId": "count_api_v1_adoption_aplication_count_get",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por ID de mascota",
+              "title": "Pet Id"
+            },
+            "description": "Filtrar por ID de mascota"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtrar por estado",
+              "title": "Status"
+            },
+            "description": "Filtrar por estado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdoptionAplicationCreate": {
+        "properties": {
+          "pet_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "title": "Pet Id",
+            "description": "ID de la mascota a adoptar"
+          },
+          "applicant_name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Applicant Name",
+            "description": "Nombre completo del solicitante"
+          },
+          "applicant_id_number": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Applicant Id Number",
+            "description": "Número de identificación"
+          },
+          "occupation": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occupation",
+            "description": "Ocupación del solicitante"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Correo electrónico del solicitante"
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Phone",
+            "description": "Teléfono de contacto"
+          },
+          "address": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Address",
+            "description": "Dirección del solicitante"
+          },
+          "housing_type": {
+            "type": "string",
+            "enum": [
+              "house",
+              "apartment",
+              "farm"
+            ],
+            "title": "Housing Type",
+            "description": "Tipo de vivienda"
+          },
+          "has_other_pets": {
+            "type": "boolean",
+            "title": "Has Other Pets",
+            "description": "¿Tiene otras mascotas?",
+            "default": false
+          },
+          "adoption_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adoption Reason",
+            "description": "Razón para adoptar"
+          },
+          "pet_experience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pet Experience",
+            "description": "Experiencia previa con mascotas"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "approved",
+              "rejected"
+            ],
+            "title": "Status",
+            "description": "Estado de la solicitud",
+            "default": "pending"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pet_id",
+          "applicant_name",
+          "applicant_id_number",
+          "email",
+          "phone",
+          "address",
+          "housing_type"
+        ],
+        "title": "AdoptionAplicationCreate",
+        "description": "Schema para crear adoption_aplication\n\nTodos los campos requeridos deben estar presentes"
+      },
+      "AdoptionAplicationResponse": {
+        "properties": {
+          "pet_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "title": "Pet Id",
+            "description": "ID de la mascota a adoptar"
+          },
+          "applicant_name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Applicant Name",
+            "description": "Nombre completo del solicitante"
+          },
+          "applicant_id_number": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Applicant Id Number",
+            "description": "Número de identificación"
+          },
+          "occupation": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occupation",
+            "description": "Ocupación del solicitante"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Correo electrónico del solicitante"
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Phone",
+            "description": "Teléfono de contacto"
+          },
+          "address": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Address",
+            "description": "Dirección del solicitante"
+          },
+          "housing_type": {
+            "type": "string",
+            "enum": [
+              "house",
+              "apartment",
+              "farm"
+            ],
+            "title": "Housing Type",
+            "description": "Tipo de vivienda"
+          },
+          "has_other_pets": {
+            "type": "boolean",
+            "title": "Has Other Pets",
+            "description": "¿Tiene otras mascotas?",
+            "default": false
+          },
+          "adoption_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adoption Reason",
+            "description": "Razón para adoptar"
+          },
+          "pet_experience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pet Experience",
+            "description": "Experiencia previa con mascotas"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "approved",
+              "rejected"
+            ],
+            "title": "Status",
+            "description": "Estado de la solicitud",
+            "default": "pending"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "application_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Application Date"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pet_id",
+          "applicant_name",
+          "applicant_id_number",
+          "email",
+          "phone",
+          "address",
+          "housing_type",
+          "id",
+          "application_date",
+          "created_at"
+        ],
+        "title": "AdoptionAplicationResponse",
+        "description": "Schema de respuesta con todos los campos"
+      },
+      "AdoptionAplicationUpdate": {
+        "properties": {
+          "pet_id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pet Id"
+          },
+          "applicant_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicant Name"
+          },
+          "applicant_id_number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicant Id Number"
+          },
+          "occupation": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occupation"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "housing_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "house",
+                  "apartment",
+                  "farm"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Housing Type"
+          },
+          "has_other_pets": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has Other Pets"
+          },
+          "adoption_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adoption Reason"
+          },
+          "pet_experience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pet Experience"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "approved",
+                  "rejected"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "title": "AdoptionAplicationUpdate",
+        "description": "Schema para actualizar adoption_aplication\n\nTodos los campos son opcionales"
+      },
+      "DonationCreate": {
+        "properties": {
+          "donor_name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Donor Name",
+            "description": "Nombre del donante"
+          },
+          "donor_email": {
+            "type": "string",
+            "format": "email",
+            "title": "Donor Email",
+            "description": "Correo electrónico del donante"
+          },
+          "donation_type": {
+            "type": "string",
+            "enum": [
+              "monetary",
+              "food",
+              "medicine",
+              "toys"
+            ],
+            "title": "Donation Type",
+            "description": "Tipo de donación"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount",
+            "description": "Monto estimado o esperado"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Descripción de la donación"
+          },
+          "payment_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Method",
+            "description": "Método de pago"
+          },
+          "transaction_reference": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transaction Reference",
+            "description": "Referencia de transacción"
+          },
+          "amount_received": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Received",
+            "description": "Monto realmente recibido"
+          }
+        },
+        "type": "object",
+        "required": [
+          "donor_name",
+          "donor_email",
+          "donation_type"
+        ],
+        "title": "DonationCreate",
+        "description": "Schema para crear donation\n\nTodos los campos requeridos deben estar presentes"
+      },
+      "DonationResponse": {
+        "properties": {
+          "donor_name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Donor Name",
+            "description": "Nombre del donante"
+          },
+          "donor_email": {
+            "type": "string",
+            "format": "email",
+            "title": "Donor Email",
+            "description": "Correo electrónico del donante"
+          },
+          "donation_type": {
+            "type": "string",
+            "enum": [
+              "monetary",
+              "food",
+              "medicine",
+              "toys"
+            ],
+            "title": "Donation Type",
+            "description": "Tipo de donación"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount",
+            "description": "Monto estimado o esperado"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Descripción de la donación"
+          },
+          "payment_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Method",
+            "description": "Método de pago"
+          },
+          "transaction_reference": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transaction Reference",
+            "description": "Referencia de transacción"
+          },
+          "amount_received": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Received",
+            "description": "Monto realmente recibido"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "donation_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Donation Date"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "donor_name",
+          "donor_email",
+          "donation_type",
+          "id",
+          "donation_date",
+          "created_at"
+        ],
+        "title": "DonationResponse",
+        "description": "Schema de respuesta con todos los campos"
+      },
+      "DonationUpdate": {
+        "properties": {
+          "donor_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Donor Name"
+          },
+          "donor_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Donor Email"
+          },
+          "donation_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "monetary",
+                  "food",
+                  "medicine",
+                  "toys"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Donation Type"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "payment_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Method"
+          },
+          "transaction_reference": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transaction Reference"
+          },
+          "amount_received": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Received"
+          }
+        },
+        "type": "object",
+        "title": "DonationUpdate",
+        "description": "Schema para actualizar donation\n\nTodos los campos son opcionales"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PetCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Nombre de la mascota"
+          },
+          "species": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Species",
+            "description": "Especie: dog, cat, rabbit, etc."
+          },
+          "breed": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Breed",
+            "description": "Raza de la mascota"
+          },
+          "approx_age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Age",
+            "description": "Edad aproximada en meses"
+          },
+          "approx_birthdate": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Birthdate",
+            "description": "Fecha de nacimiento aproximada"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
+            "title": "Sex",
+            "description": "Sexo de la mascota"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "title": "Size",
+            "description": "Tamaño de la mascota"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 999.99,
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight",
+            "description": "Peso en kg"
+          },
+          "adoption_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "adopted",
+              "in_process"
+            ],
+            "title": "Adoption Status",
+            "description": "Estado de adopción",
+            "default": "available"
+          },
+          "health_status": {
+            "type": "string",
+            "maxLength": 50,
+            "title": "Health Status",
+            "description": "Estado de salud",
+            "default": "healthy"
+          },
+          "current_location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Location",
+            "description": "Ubicación actual"
+          },
+          "microchip": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Microchip",
+            "description": "Número de microchip"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Descripción de la mascota"
+          },
+          "special_needs": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Special Needs",
+            "description": "Necesidades especiales"
+          },
+          "intake_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Intake Date",
+            "description": "Fecha de ingreso al refugio"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url",
+            "description": "URL de la foto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "species",
+          "sex",
+          "size",
+          "intake_date"
+        ],
+        "title": "PetCreate",
+        "description": "Schema para crear pet\n\nTodos los campos requeridos deben estar presentes"
+      },
+      "PetResponse": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Nombre de la mascota"
+          },
+          "species": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Species",
+            "description": "Especie: dog, cat, rabbit, etc."
+          },
+          "breed": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Breed",
+            "description": "Raza de la mascota"
+          },
+          "approx_age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Age",
+            "description": "Edad aproximada en meses"
+          },
+          "approx_birthdate": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Birthdate",
+            "description": "Fecha de nacimiento aproximada"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
+            "title": "Sex",
+            "description": "Sexo de la mascota"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "title": "Size",
+            "description": "Tamaño de la mascota"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight",
+            "description": "Peso en kg"
+          },
+          "adoption_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "adopted",
+              "in_process"
+            ],
+            "title": "Adoption Status",
+            "description": "Estado de adopción",
+            "default": "available"
+          },
+          "health_status": {
+            "type": "string",
+            "maxLength": 50,
+            "title": "Health Status",
+            "description": "Estado de salud",
+            "default": "healthy"
+          },
+          "current_location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Location",
+            "description": "Ubicación actual"
+          },
+          "microchip": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Microchip",
+            "description": "Número de microchip"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Descripción de la mascota"
+          },
+          "special_needs": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Special Needs",
+            "description": "Necesidades especiales"
+          },
+          "intake_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Intake Date",
+            "description": "Fecha de ingreso al refugio"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url",
+            "description": "URL de la foto"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "species",
+          "sex",
+          "size",
+          "intake_date",
+          "id",
+          "created_at"
+        ],
+        "title": "PetResponse",
+        "description": "Schema de respuesta con todos los campos"
+      },
+      "PetUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "species": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Species"
+          },
+          "breed": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Breed"
+          },
+          "approx_age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Age"
+          },
+          "approx_birthdate": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approx Birthdate"
+          },
+          "sex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "male",
+                  "female"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sex"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "small",
+                  "medium",
+                  "large"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 999.99,
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight"
+          },
+          "adoption_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "available",
+                  "adopted",
+                  "in_process"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adoption Status"
+          },
+          "health_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Health Status"
+          },
+          "current_location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Location"
+          },
+          "microchip": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Microchip"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "special_needs": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Special Needs"
+          },
+          "intake_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intake Date"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
+          }
+        },
+        "type": "object",
+        "title": "PetUpdate",
+        "description": "Schema para actualizar pet\n\nTodos los campos son opcionales"
+      },
+      "VaccineCreate": {
+        "properties": {
+          "pet_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "title": "Pet Id",
+            "description": "ID de la mascota"
+          },
+          "vaccine_name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Vaccine Name",
+            "description": "Nombre de la vacuna"
+          },
+          "application_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Application Date",
+            "description": "Fecha de aplicación"
+          },
+          "next_dose": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Dose",
+            "description": "Fecha de próxima dosis"
+          },
+          "veterinarian": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Veterinarian",
+            "description": "Nombre del veterinario"
+          },
+          "batch_number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Number",
+            "description": "Número de lote"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes",
+            "description": "Notas adicionales"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pet_id",
+          "vaccine_name",
+          "application_date"
+        ],
+        "title": "VaccineCreate",
+        "description": "Schema para crear vaccine\n\nTodos los campos requeridos deben estar presentes"
+      },
+      "VaccineResponse": {
+        "properties": {
+          "pet_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "title": "Pet Id",
+            "description": "ID de la mascota"
+          },
+          "vaccine_name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Vaccine Name",
+            "description": "Nombre de la vacuna"
+          },
+          "application_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Application Date",
+            "description": "Fecha de aplicación"
+          },
+          "next_dose": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Dose",
+            "description": "Fecha de próxima dosis"
+          },
+          "veterinarian": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Veterinarian",
+            "description": "Nombre del veterinario"
+          },
+          "batch_number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Number",
+            "description": "Número de lote"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes",
+            "description": "Notas adicionales"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pet_id",
+          "vaccine_name",
+          "application_date",
+          "id",
+          "created_at"
+        ],
+        "title": "VaccineResponse",
+        "description": "Schema de respuesta con todos los campos"
+      },
+      "VaccineUpdate": {
+        "properties": {
+          "pet_id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pet Id"
+          },
+          "vaccine_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vaccine Name"
+          },
+          "application_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Date"
+          },
+          "next_dose": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Dose"
+          },
+          "veterinarian": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Veterinarian"
+          },
+          "batch_number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Number"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "title": "VaccineUpdate",
+        "description": "Schema para actualizar vaccine\n\nTodos los campos son opcionales"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

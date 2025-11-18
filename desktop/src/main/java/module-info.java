@@ -8,6 +8,8 @@ module boilerplate.desktop {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.materialdesign2;
+    requires java.net.http;
+    requires com.google.gson;
 
     exports boilerplate.desktop;
     exports boilerplate.desktop.theme;

@@ -1,4 +1,4 @@
-package com.refugio.repository;
+package boilerplate.desktop.repositories;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

@@ -27,7 +27,7 @@ public class Launcher extends Application {
         Image appIcon = new Image(getResourceAsStream(ASSETS_DIR + "app-icon.png"));
 
         MainWindow mainWindow = new MainWindow();
-        Scene scene = new Scene(mainWindow, 800, 600);
+        Scene scene = new Scene(mainWindow, 1024, 720);
         scene.getStylesheets().addAll(
                 FONTS_DIR + "index.css",
                 STYLES_DIR + "index.css"

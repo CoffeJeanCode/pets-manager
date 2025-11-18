@@ -1,6 +1,6 @@
 .root {
-    -fx-base: rgb(39,40,34);
-    -fx-accent: rgb(166,226,46);
+    -fx-base: rgb(10, 10, 8);
+    -fx-accent: rgb(36, 53, 206);
     -fx-focus-color: -fx-accent;
 
     -fx-control-inner-background: derive(-fx-base, 35%);

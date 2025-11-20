@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://localhost:8001/api/v1";
+    private static final String BASE_URL = "http://localhost:8003/api/v1";
     private static final Duration TIMEOUT = Duration.ofSeconds(30);
 
     private final HttpClient client;
@@ -58,8 +58,22 @@ public class ApiClient {
                     }
                 })
                 .exceptionally(throwable -> {
-                    System.err.println("Error in getList for " + endpoint + ": " + throwable.getMessage());
-                    throwable.printStackTrace();
+                    // Suppress stack traces for connection errors (API not available)
+                    Throwable cause = throwable.getCause();
+                    boolean isConnectionError = cause instanceof java.net.ConnectException || 
+                                              cause instanceof java.nio.channels.ClosedChannelException ||
+                                              (throwable instanceof java.util.concurrent.CompletionException && 
+                                               throwable.getCause() instanceof java.net.ConnectException);
+                    
+                    if (isConnectionError) {
+                        // Only show connection error once per endpoint to avoid spam
+                        System.err.println("API connection failed for " + endpoint + ". Make sure the API is running on localhost:8003");
+                    } else {
+                        System.err.println("Error in getList for " + endpoint + ": " + throwable.getMessage());
+                        if (cause != null && !(cause instanceof java.net.ConnectException)) {
+                            cause.printStackTrace();
+                        }
+                    }
                     return List.of(); // Return empty list on error
                 });
     }
@@ -74,7 +88,25 @@ public class ApiClient {
                 .build();
 
         return sendAsync(request)
-                .thenApply(response -> parseOne(response, clazz));
+                .thenApply(response -> parseOne(response, clazz))
+                .exceptionally(throwable -> {
+                    // Suppress stack traces for connection errors (API not available)
+                    Throwable cause = throwable.getCause();
+                    boolean isConnectionError = cause instanceof java.net.ConnectException || 
+                                              cause instanceof java.nio.channels.ClosedChannelException ||
+                                              (throwable instanceof java.util.concurrent.CompletionException && 
+                                               throwable.getCause() instanceof java.net.ConnectException);
+                    
+                    if (isConnectionError) {
+                        System.err.println("API connection failed for " + endpoint + ". Make sure the API is running on localhost:8003");
+                    } else {
+                        System.err.println("Error in getOne for " + endpoint + ": " + throwable.getMessage());
+                        if (cause != null && !(cause instanceof java.net.ConnectException)) {
+                            cause.printStackTrace();
+                        }
+                    }
+                    return null;
+                });
     }
 
     // ==================== POST ====================
@@ -84,10 +116,24 @@ public class ApiClient {
     }
 
     public <T, R> CompletableFuture<R> post(String endpoint, T body, Class<R> responseType, String authToken) {
+        if (body == null) {
+            throw new IllegalArgumentException("Request body cannot be null for POST to " + endpoint);
+        }
+        
         String json = gson.toJson(body);
-        HttpRequest request = buildRequest(endpoint, authToken)
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .header("Content-Type", "application/json")
+        // Debug: log the JSON being sent
+        System.out.println("POST to " + BASE_URL + endpoint + " with body: " + json);
+        
+        if (json == null || json.trim().isEmpty() || json.equals("null") || json.equals("{}")) {
+            throw new RuntimeException("Cannot send POST request: serialized body is null or empty. Original body: " + body + ", JSON: " + json);
+        }
+        
+        // Build request with Content-Type header before POST method
+        HttpRequest.Builder requestBuilder = buildRequest(endpoint, authToken)
+                .header("Content-Type", "application/json; charset=utf-8");
+        
+        HttpRequest request = requestBuilder
+                .POST(HttpRequest.BodyPublishers.ofString(json, java.nio.charset.StandardCharsets.UTF_8))
                 .build();
 
         return sendAsync(request)
@@ -96,6 +142,30 @@ public class ApiClient {
                         return parseOne(response, responseType);
                     }
                     throw handleError(response);
+                })
+                .exceptionally(throwable -> {
+                    // Suppress stack traces for connection errors (API not available)
+                    Throwable cause = throwable.getCause();
+                    boolean isConnectionError = cause instanceof java.net.ConnectException || 
+                                              cause instanceof java.nio.channels.ClosedChannelException ||
+                                              (throwable instanceof java.util.concurrent.CompletionException && 
+                                               throwable.getCause() instanceof java.net.ConnectException);
+                    
+                    if (isConnectionError) {
+                        System.err.println("API connection failed for " + endpoint + ". Make sure the API is running on localhost:8003");
+                    } else {
+                        // Log error but don't print full stack trace for HTTP errors
+                        String errorMsg = throwable.getMessage();
+                        if (errorMsg != null && errorMsg.contains("HTTP")) {
+                            System.err.println("API error for " + endpoint + ": " + errorMsg);
+                        } else {
+                            System.err.println("Error in post for " + endpoint + ": " + errorMsg);
+                            if (cause != null && !(cause instanceof java.net.ConnectException)) {
+                                cause.printStackTrace();
+                            }
+                        }
+                    }
+                    return null;
                 });
     }
 
@@ -106,10 +176,23 @@ public class ApiClient {
     }
 
     public <T, R> CompletableFuture<R> put(String endpoint, T body, Class<R> responseType, String authToken) {
+        if (body == null) {
+            throw new IllegalArgumentException("Request body cannot be null for PUT to " + endpoint);
+        }
+        
         String json = gson.toJson(body);
-        HttpRequest request = buildRequest(endpoint, authToken)
-                .PUT(HttpRequest.BodyPublishers.ofString(json))
-                .header("Content-Type", "application/json")
+        System.out.println("PUT to " + BASE_URL + endpoint + " with body: " + json);
+        
+        if (json == null || json.trim().isEmpty() || json.equals("null") || json.equals("{}")) {
+            throw new RuntimeException("Cannot send PUT request: serialized body is null or empty. Original body: " + body + ", JSON: " + json);
+        }
+        
+        // Build request with Content-Type header before PUT method
+        HttpRequest.Builder requestBuilder = buildRequest(endpoint, authToken)
+                .header("Content-Type", "application/json; charset=utf-8");
+        
+        HttpRequest request = requestBuilder
+                .PUT(HttpRequest.BodyPublishers.ofString(json, java.nio.charset.StandardCharsets.UTF_8))
                 .build();
 
         return sendAsync(request)
@@ -118,6 +201,29 @@ public class ApiClient {
                         return parseOne(response, responseType);
                     }
                     throw handleError(response);
+                })
+                .exceptionally(throwable -> {
+                    // Suppress stack traces for connection errors (API not available)
+                    Throwable cause = throwable.getCause();
+                    boolean isConnectionError = cause instanceof java.net.ConnectException || 
+                                              cause instanceof java.nio.channels.ClosedChannelException ||
+                                              (throwable instanceof java.util.concurrent.CompletionException && 
+                                               throwable.getCause() instanceof java.net.ConnectException);
+                    
+                    if (isConnectionError) {
+                        System.err.println("API connection failed for " + endpoint + ". Make sure the API is running on localhost:8003");
+                    } else {
+                        String errorMsg = throwable.getMessage();
+                        if (errorMsg != null && errorMsg.contains("HTTP")) {
+                            System.err.println("API error for " + endpoint + ": " + errorMsg);
+                        } else {
+                            System.err.println("Error in put for " + endpoint + ": " + errorMsg);
+                            if (cause != null && !(cause instanceof java.net.ConnectException)) {
+                                cause.printStackTrace();
+                            }
+                        }
+                    }
+                    return null;
                 });
     }
 
@@ -201,8 +307,19 @@ public class ApiClient {
 
     private RuntimeException handleError(HttpResponse<String> response) {
         String body = response.body() != null ? response.body() : "Sin cuerpo";
-        String message = String.format("HTTP %d - %s: %s", response.statusCode(), response.uri(), body);
-        return new RuntimeException("Error en API: " + message);
+        
+        // Provide more helpful error messages based on status code
+        if (response.statusCode() == 400) {
+            return new RuntimeException("Error en API: Solicitud inválida (HTTP 400) - " + body);
+        } else if (response.statusCode() == 404) {
+            return new RuntimeException("Error en API: Recurso no encontrado (HTTP 404) - " + response.uri());
+        } else if (response.statusCode() == 422) {
+            return new RuntimeException("Error en API: Error de validación (HTTP 422) - " + body);
+        } else if (response.statusCode() == 500) {
+            return new RuntimeException("Error en API: Error interno del servidor (HTTP 500) - " + body);
+        }
+        
+        return new RuntimeException("Error en API: HTTP " + response.statusCode() + " - " + response.uri() + ": " + body);
     }
 
     // ==================== MÉTODOS EXTRA ====================

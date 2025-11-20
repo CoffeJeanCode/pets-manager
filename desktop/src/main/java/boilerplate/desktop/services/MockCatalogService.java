@@ -7,7 +7,7 @@ import java.util.List;
 public class MockCatalogService {
 
     private final List<Plant> plants = List.of(
-            new Plant(1L, "Haworthia", 22, "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80",
+            new Plant(1L, "Haworthia", 22, "/images/girasol.jpg",
                     4, "bajo", "Suculenta compacta ideal para rincones iluminados.", "Primavera"),
             new Plant(2L, "Hens and Chick", 24, "https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&fit=crop&w=600&q=80",
                     3, "medio", "Colores suaves que combinan con espacios cálidos.", "Todo el año"),
@@ -23,12 +23,6 @@ public class MockCatalogService {
 
     public List<Plant> getPlants() {
         return plants;
-    }
-
-    public List<Plant> getRecommendations(int lightLevel) {
-        return plants.stream()
-                .filter(plant -> plant.getLightLevel() <= lightLevel)
-                .toList();
     }
 }
 

@@ -5,25 +5,74 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="boilerplate.desktop.controller.GardenDesignerController">
+    <!-- Left: Filters -->
     <left>
-        <VBox spacing="16" prefWidth="320" styleClass="palette-pane">
+        <VBox spacing="20" prefWidth="280" styleClass="palette-pane">
             <padding>
-                <Insets top="24" right="16" bottom="24" left="24"/>
+                <Insets top="28" right="20" bottom="28" left="20"/>
             </padding>
+            
+            <!-- Filter Card -->
+            <VBox spacing="12" styleClass="filter-card">
+                <Label text="Filtros" styleClass="section-title"/>
+                
+                <VBox spacing="8">
+                    <Label text="Luz:" styleClass="filter-label"/>
+                    <ComboBox fx:id="lightFilter" styleClass="filter-combo" promptText="Seleccionar"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Riego:" styleClass="filter-label"/>
+                    <ComboBox fx:id="riegoFilter" styleClass="filter-combo" promptText="Seleccionar"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Ambiente:" styleClass="filter-label"/>
+                    <ComboBox fx:id="ambienteFilter" styleClass="filter-combo" promptText="Seleccionar"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Categoría:" styleClass="filter-label"/>
+                    <ComboBox fx:id="categoriaFilter" styleClass="filter-combo" promptText="Seleccionar"/>
+                </VBox>
+                
+                <Button fx:id="applyFilterButton" text="Aplicar Filtros" styleClass="primary-pill-button"
+                        onAction="#applyFilters"/>
+                <Button fx:id="clearFilterButton" text="Limpiar" styleClass="pill-filter"
+                        onAction="#clearFilters"/>
+            </VBox>
+        </VBox>
+    </left>
+    
+    <!-- Center: Canvas -->
+    <center>
+        <StackPane styleClass="canvas-wrapper">
+            <AnchorPane fx:id="canvasPane" prefWidth="600" prefHeight="500" styleClass="designer-canvas">
+                <!-- Background image will be set via CSS -->
+            </AnchorPane>
+        </StackPane>
+    </center>
+    
+    <!-- Right: Elements -->
+    <right>
+        <VBox spacing="20" prefWidth="280" styleClass="palette-pane">
+            <padding>
+                <Insets top="28" right="20" bottom="28" left="20"/>
+            </padding>
+            
             <Label text="Elementos" styleClass="section-title"/>
             <Label text="Haz clic en una tarjeta para añadirla al lienzo. Luego arrástrala."
                    wrapText="true" styleClass="muted-label"/>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                 <content>
-                    <FlowPane fx:id="paletteContainer" hgap="12" vgap="12" prefWrapLength="280"/>
+                    <FlowPane fx:id="paletteContainer" hgap="16" vgap="16" prefWrapLength="240">
+                        <padding>
+                            <Insets top="8" right="8" bottom="8" left="8"/>
+                        </padding>
+                    </FlowPane>
                 </content>
             </ScrollPane>
         </VBox>
-    </left>
-    <center>
-        <StackPane styleClass="canvas-wrapper">
-            <AnchorPane fx:id="canvasPane" prefWidth="600" prefHeight="500" styleClass="designer-canvas"/>
-        </StackPane>
-    </center>
+    </right>
 </BorderPane>
 

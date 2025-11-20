@@ -35,9 +35,12 @@ AnchorPane {
 
 /* Main Header */
 .hero-title {
-    -fx-font-size: 28px;
-    -fx-font-weight: 600;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
+    -fx-background-color: #274b27;
+    -fx-border-radius: 12px;
+    -fx-padding: 10px 0px;
 }
 
 .hero-subtitle {
@@ -73,9 +76,10 @@ AnchorPane {
 
 /* Plant Cards - Flat Design */
 .plant-card {
-    -fx-background-color: #2a3f2a; /* Slightly lighter dark green */
+    -fx-background-color: #2a442a; /* Slightly lighter dark green */
     -fx-background-radius: 12;
     -fx-border-radius: 12;
+    -fx-padding: 10px;
 }
 
 .plant-card:hover {
@@ -87,9 +91,12 @@ AnchorPane {
 .plant-image {
 }
 
-/* Plant Glow Circle - Smaller circle behind image */
+/* Plant Glow Circle - Oscuro con gradiente */
 .plant-glow {
-    -fx-fill: rgba(255, 255, 255, 0.08);
+    -fx-fill: linear-gradient(from 0% 0% to 100% 100%, 
+        rgba(20, 40, 20, 0.9) 0%, 
+        rgba(10, 20, 10, 0.95) 50%, 
+        rgba(5, 15, 5, 1.0) 100%);
 }
 
 /* Plant Name */
@@ -186,7 +193,7 @@ AnchorPane {
 
 /* Cards Flow Container */
 .cards-flow {
-    -fx-background-color: transparent;
+    -fx-background-color: rgb(26, 46, 26);
 }
 
 /* Scroll Pane */
@@ -218,6 +225,10 @@ AnchorPane {
 /* Designer Canvas */
 .designer-canvas {
     -fx-background-color: #1a2e1a;
+    -fx-background-image: url('/boilerplate/desktop/assets/images/bg.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
     -fx-background-radius: 12;
     -fx-border-radius: 12;
     -fx-border-color: rgba(255, 255, 255, 0.1);
@@ -226,12 +237,13 @@ AnchorPane {
 }
 
 .canvas-wrapper {
-    -fx-padding: 24;
+    -fx-padding: 28;
     -fx-background-color: transparent;
 }
 
 .canvas-plant-image {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0, 0, 6);
+    -fx-view-order: -1;
 }
 
 /* Palette Pane */
@@ -243,12 +255,61 @@ AnchorPane {
     -fx-border-width: 1;
 }
 
+.palette-pane .scroll-pane {
+    -fx-padding: 0;
+}
+
+.palette-pane .flow-pane {
+    -fx-padding: 8;
+}
+
 .palette-card {
     -fx-opacity: 0.9;
 }
 
 .palette-card:hover {
     -fx-opacity: 1.0;
+}
+
+/* Filter Card */
+.filter-card {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.08);
+    -fx-border-width: 1;
+    -fx-padding: 16;
+}
+
+.filter-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+.filter-combo {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+    -fx-pref-width: 240;
+}
+
+.filter-combo:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.filter-combo:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.separator {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Section Title */
@@ -297,66 +358,97 @@ AnchorPane {
     -fx-font-weight: 500;
 }
 
-/* Search Field and Text Fields */
+/* Search Field and Text Fields - Unitono */
 .search-field {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-text-fill: #ffffff;
     -fx-padding: 10 16;
     -fx-background-radius: 6;
     -fx-border-radius: 6;
-    -fx-border-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
 }
 
 .search-field:focused {
-    -fx-border-color: rgba(255, 255, 255, 0.3);
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
 }
 
 .search-field:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Text Field Styles */
+/* Text Field Styles - Unitono (monotónico) */
 .text-field {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-text-fill: #ffffff;
     -fx-padding: 10 16;
     -fx-background-radius: 6;
     -fx-border-radius: 6;
-    -fx-border-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
 }
 
 .text-field:focused {
-    -fx-border-color: rgba(255, 255, 255, 0.3);
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
 }
 
 .text-field:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Text Field Prompt */
 .text-field .prompt-text {
-    -fx-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-text-fill: rgba(255, 255, 255, 0.4);
 }
 
-/* Combo Box Styles */
+/* Form Input - Unitono (monotónico) */
+.form-input {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 16;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+}
+
+.form-input:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.form-input:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.form-input .prompt-text {
+    -fx-text-fill: rgba(255, 255, 255, 0.4);
+}
+
+/* Combo Box Styles - Unitono (monotónico) */
 .combo-box {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-text-fill: #ffffff;
     -fx-background-radius: 6;
     -fx-border-radius: 6;
-    -fx-border-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
     -fx-padding: 6 10;
 }
 
 .combo-box:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }
 
 .combo-box:focused {
-    -fx-border-color: rgba(255, 255, 255, 0.3);
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
 }
 
 .combo-box .list-cell {
@@ -439,4 +531,22 @@ AnchorPane {
 /* Label Styles */
 .label {
     -fx-text-fill: #ffffff;
+}
+
+/* Registration Container */
+.registration-container {
+    -fx-background-color: rgba(39, 75, 39, 0.6);
+    -fx-background-radius: 16px;
+    -fx-padding: 40px;
+    -fx-max-width: 500px;
+    -fx-max-height: 500px;
+}
+
+/* Error Label */
+.error-label {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 12px;
+    -fx-padding: 8px;
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+    -fx-background-radius: 8px;
 }

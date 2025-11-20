@@ -29,28 +29,47 @@ public class Launcher extends Application {
         Scene scene = new Scene(mainWindow, 1400, 900);
         
         // Load CSS files using proper resource paths
-        // Load fonts CSS (optional - may not exist)
-        try {
-            java.net.URL fontsUrl = getClass().getResource(FONTS_DIR + "index.css");
-            if (fontsUrl != null) {
-                scene.getStylesheets().add(fontsUrl.toExternalForm());
+        // Try both paths (duplicated and normal) due to Maven resource configuration
+        String[] cssPaths = {
+            "/boilerplate/desktop/boilerplate/desktop/assets/styles/index.css",
+            STYLES_DIR + "index.css"
+        };
+        
+        boolean cssLoaded = false;
+        for (String cssPath : cssPaths) {
+            try {
+                java.net.URL stylesUrl = getClass().getResource(cssPath);
+                if (stylesUrl != null) {
+                    scene.getStylesheets().add(stylesUrl.toExternalForm());
+                    System.out.println("CSS loaded from: " + stylesUrl.toExternalForm());
+                    cssLoaded = true;
+                    break;
+                }
+            } catch (Exception e) {
+                // Try next path
             }
-        } catch (Exception e) {
-            System.err.println("Warning: Could not load fonts CSS: " + e.getMessage());
         }
         
-        // Load main styles CSS (required)
-        try {
-            java.net.URL stylesUrl = getClass().getResource(STYLES_DIR + "index.css");
-            if (stylesUrl != null) {
-                scene.getStylesheets().add(stylesUrl.toExternalForm());
-                System.out.println("CSS loaded from: " + stylesUrl.toExternalForm());
-            } else {
-                System.err.println("ERROR: Main styles CSS not found at: " + STYLES_DIR + "index.css");
+        if (!cssLoaded) {
+            System.err.println("Warning: Could not load main styles CSS from any path");
+        }
+        
+        // Load fonts CSS (optional - may not exist)
+        String[] fontPaths = {
+            "/boilerplate/desktop/boilerplate/desktop/assets/fonts/index.css",
+            FONTS_DIR + "index.css"
+        };
+        
+        for (String fontPath : fontPaths) {
+            try {
+                java.net.URL fontsUrl = getClass().getResource(fontPath);
+                if (fontsUrl != null) {
+                    scene.getStylesheets().add(fontsUrl.toExternalForm());
+                    break;
+                }
+            } catch (Exception e) {
+                // Optional, ignore
             }
-        } catch (Exception e) {
-            System.err.println("ERROR: Could not load main styles CSS: " + e.getMessage());
-            e.printStackTrace();
         }
 
         stage.setScene(scene);

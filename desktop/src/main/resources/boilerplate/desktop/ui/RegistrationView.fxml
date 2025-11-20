@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="boilerplate.desktop.controller.RegistrationController"
+            prefWidth="500" prefHeight="400">
+    <center>
+        <VBox alignment="CENTER" spacing="24" styleClass="registration-container">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+            
+            <VBox alignment="CENTER" spacing="12">
+                <ImageView fitWidth="80" fitHeight="80" preserveRatio="true" pickOnBounds="true" smooth="true">
+                    <image>
+                        <Image url="@/boilerplate/desktop/assets/images/logo.jpeg"/>
+                    </image>
+                </ImageView>
+                <Label text="Bienvenido a EcoGallery" styleClass="hero-title"/>
+                <Label text="Por favor, regístrate para continuar" styleClass="muted-label"/>
+            </VBox>
+            
+            <VBox spacing="16" prefWidth="400">
+                <VBox spacing="8">
+                    <Label text="Nombre completo:" styleClass="form-label"/>
+                    <TextField fx:id="nombreField" promptText="Ingresa tu nombre" styleClass="form-input"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Email:" styleClass="form-label"/>
+                    <TextField fx:id="emailField" promptText="tu@email.com" styleClass="form-input"/>
+                </VBox>
+                
+                <Label fx:id="errorLabel" text="" styleClass="error-label" wrapText="true" visible="false"/>
+                
+                <Button fx:id="registerButton" text="Registrarse" styleClass="primary-pill-button"
+                        onAction="#register" prefWidth="400"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
+

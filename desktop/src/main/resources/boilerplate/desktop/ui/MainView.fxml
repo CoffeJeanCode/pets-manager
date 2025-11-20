@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="boilerplate.desktop.controller.MainController"
@@ -15,7 +17,16 @@
             <padding>
                 <Insets top="24" right="32" bottom="20" left="32"/>
             </padding>
-            <Label fx:id="greetingLabel" text="Plant Shop" styleClass="hero-title"/>
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <ImageView fitWidth="40" fitHeight="40" preserveRatio="true" pickOnBounds="true" smooth="true">
+                    <image>
+                        <Image url="@/boilerplate/desktop/assets/images/logo.jpeg"/>
+                    </image>
+                </ImageView>
+                <Label fx:id="greetingLabel" text="EcoGarden" styleClass="hero-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="accountButton" text="Mi Cuenta" styleClass="primary-pill-button" onAction="#showRegistrationDialog" visible="false"/>
+            </HBox>
         </VBox>
     </top>
 

@@ -39,9 +39,6 @@
             <ToggleButton fx:id="catalogToggle" text="Catálogo" onAction="#showCatalog"
                           toggleGroup="$navGroup"
                           styleClass="nav-toggle" selected="true"/>
-            <ToggleButton fx:id="recommendationsToggle" text="Recomendaciones"
-                          toggleGroup="$navGroup"
-                          onAction="#showRecommendations" styleClass="nav-toggle"/>
             <ToggleButton fx:id="designerToggle" text="Diseñador" onAction="#showDesigner"
                           toggleGroup="$navGroup"
                           styleClass="nav-toggle"/>

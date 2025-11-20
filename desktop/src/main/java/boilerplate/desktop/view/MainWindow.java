@@ -8,7 +8,12 @@ public class MainWindow extends StackPane {
 
     public MainWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/boilerplate/desktop/ui/MainView.fxml"));
+            java.net.URL resourceUrl = getClass().getResource("/boilerplate/desktop/ui/MainView.fxml");
+            if (resourceUrl == null) {
+                throw new IllegalStateException("MainView.fxml not found in classpath. " +
+                    "Expected at: /boilerplate/desktop/ui/MainView.fxml");
+            }
+            FXMLLoader loader = new FXMLLoader(resourceUrl);
             Node view = loader.load();
             getChildren().add(view);
         } catch (Exception e) {

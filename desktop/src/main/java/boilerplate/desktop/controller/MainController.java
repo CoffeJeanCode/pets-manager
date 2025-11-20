@@ -21,9 +21,6 @@ public class MainController {
     private ToggleButton catalogToggle;
 
     @FXML
-    private ToggleButton recommendationsToggle;
-
-    @FXML
     private ToggleButton designerToggle;
 
     @FXML
@@ -48,14 +45,6 @@ public class MainController {
     }
 
     @FXML
-    private void showRecommendations() {
-        showView("recommendations", "/boilerplate/desktop/ui/RecommendationsView.fxml", loader -> {
-            RecommendationsController controller = loader.getController();
-            controller.setCatalogService(catalogService);
-        });
-    }
-
-    @FXML
     private void showDesigner() {
         showView("designer", "/boilerplate/desktop/ui/DesignerView.fxml", loader -> {
             GardenDesignerController controller = loader.getController();
@@ -69,7 +58,12 @@ public class MainController {
         try {
             Node view = viewCache.computeIfAbsent(key, k -> {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+                    java.net.URL resourceUrl = getClass().getResource(resource);
+                    if (resourceUrl == null) {
+                        throw new IllegalStateException("Resource not found: " + resource + 
+                            ". Make sure the FXML file exists in the classpath.");
+                    }
+                    FXMLLoader loader = new FXMLLoader(resourceUrl);
                     Node loadedView = loader.load();
                     configurator.configure(loader);
                     return loadedView;

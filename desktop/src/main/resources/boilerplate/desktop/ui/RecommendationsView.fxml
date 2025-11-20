@@ -6,7 +6,10 @@
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="boilerplate.desktop.controller.RecommendationsController">
     <top>
-        <VBox spacing="12" padding="24">
+        <VBox spacing="12">
+            <padding>
+                <Insets top="24" right="24" bottom="24" left="24"/>
+            </padding>
             <Label text="¿Cuánta luz recibe tu espacio?" styleClass="section-title"/>
             <HBox spacing="12" alignment="CENTER_LEFT">
                 <Slider fx:id="lightSlider" min="1" max="5" value="3" majorTickUnit="1"
@@ -20,8 +23,11 @@
     <center>
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
             <content>
-                <FlowPane fx:id="recommendationContainer" hgap="18" vgap="18" padding="24"
-                          prefWrapLength="900" styleClass="cards-flow"/>
+                <FlowPane fx:id="recommendationContainer" hgap="18" vgap="18" prefWrapLength="900" styleClass="cards-flow">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                </FlowPane>
             </content>
         </ScrollPane>
     </center>

@@ -49,7 +49,12 @@ public class RecommendationsController {
         recommendationContainer.getChildren().clear();
         for (Plant plant : catalogService.getRecommendations(level)) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boilerplate/desktop/ui/PlantCard.fxml"));
+                java.net.URL resourceUrl = getClass().getResource("/boilerplate/desktop/ui/PlantCard.fxml");
+                if (resourceUrl == null) {
+                    throw new IllegalStateException("PlantCard.fxml not found in classpath. " +
+                        "Expected at: /boilerplate/desktop/ui/PlantCard.fxml");
+                }
+                FXMLLoader loader = new FXMLLoader(resourceUrl);
                 Region card = loader.load();
                 PlantCardController controller = loader.getController();
                 controller.setPlant(plant);

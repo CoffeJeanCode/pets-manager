@@ -3,18 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="boilerplate.desktop.controller.PlantCardController"
       spacing="12" alignment="TOP_CENTER" prefWidth="280" prefHeight="380"
       styleClass="plant-card">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="14" right="14" bottom="14" left="14"/>
     </padding>
     
     <!-- Plant Image -->
-    <ImageView fx:id="plantImage" fitWidth="240" fitHeight="200" preserveRatio="true"
-               smooth="true" cache="true" styleClass="plant-image"/>
+    <StackPane alignment="CENTER" prefHeight="180">
+        <Circle radius="60" styleClass="plant-glow"/>
+        <ImageView fx:id="plantImage" fitWidth="160" fitHeight="160" preserveRatio="true"
+                   smooth="true" cache="true" styleClass="plant-image"/>
+    </StackPane>
     
     <!-- Content -->
     <VBox spacing="8" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="boilerplate.desktop.controller.MainController"
+            stylesheets="@/boilerplate/desktop/assets/styles/index.css"
+            prefWidth="1100" prefHeight="720">
+
+    <fx:define>
+        <ToggleGroup fx:id="navGroup"/>
+    </fx:define>
+
+    <top>
+        <VBox spacing="12" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="24" right="32" bottom="24" left="32"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label fx:id="greetingLabel" text="Hola, María" styleClass="hero-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <TextField promptText="Busca tu planta favorita" styleClass="search-field"/>
+            </HBox>
+            <Label text="Descubre, diseña y disfruta de tu jardín digital."
+                   styleClass="hero-subtitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentContainer" BorderPane.alignment="CENTER">
+            <Label text="Cargando..." styleClass="muted-label"/>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="16" right="24" bottom="24" left="24"/>
+            </padding>
+            <ToggleButton fx:id="catalogToggle" text="Catálogo" onAction="#showCatalog"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-toggle" selected="true"/>
+            <ToggleButton fx:id="recommendationsToggle" text="Recomendaciones"
+                          toggleGroup="$navGroup"
+                          onAction="#showRecommendations" styleClass="nav-toggle"/>
+            <ToggleButton fx:id="designerToggle" text="Diseñador" onAction="#showDesigner"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-toggle"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+

@@ -1,0 +1,437 @@
+/* Flat Design - Plant Shop Theme */
+.root {
+    -fx-font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #1a2e1a; /* Dark green background */
+    -fx-text-fill: #ffffff;
+    -fx-base: #1a2e1a;
+    -fx-background: #1a2e1a;
+}
+
+/* Base Container Backgrounds - Use JavaFX type selectors */
+BorderPane {
+    -fx-background-color: transparent;
+}
+
+VBox {
+    -fx-background-color: transparent;
+}
+
+HBox {
+    -fx-background-color: transparent;
+}
+
+StackPane {
+    -fx-background-color: transparent;
+}
+
+FlowPane {
+    -fx-background-color: transparent;
+}
+
+AnchorPane {
+    -fx-background-color: transparent;
+}
+
+/* Main Header */
+.hero-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #ffffff;
+}
+
+.hero-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
+}
+
+/* Navigation Toggles - Consistent Button Design */
+.nav-toggle {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 24;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.nav-toggle:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: #ffffff;
+}
+
+.nav-toggle:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-toggle:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Plant Cards - Flat Design */
+.plant-card {
+    -fx-background-color: #2a3f2a; /* Slightly lighter dark green */
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.plant-card:hover {
+    -fx-background-color: #324832;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
+}
+
+/* Plant Image */
+.plant-image {
+}
+
+/* Plant Name */
+.plant-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #ffffff;
+}
+
+/* Plant Description */
+.plant-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-line-spacing: 4;
+}
+
+/* Plant Price */
+.plant-price {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #ffffff;
+}
+
+/* Cart Icon Button - Consistent with Design System */
+.cart-icon-button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 6;
+    -fx-cursor: hand;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+}
+
+.cart-icon-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cart-icon-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.cart-icon {
+    -fx-font-size: 18px;
+}
+
+/* Primary Pill Button - Consistent Design System */
+.primary-pill-button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 20;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.primary-pill-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.primary-pill-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Pill Filter - Consistent Button Style */
+.pill-filter {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 6 14;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+}
+
+.pill-filter:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: #ffffff;
+}
+
+.pill-filter:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.pill-filter:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Cards Flow Container */
+.cards-flow {
+    -fx-background-color: transparent;
+}
+
+/* Scroll Pane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-radius: 4;
+}
+
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Designer Canvas */
+.designer-canvas {
+    -fx-background-color: #1a2e1a;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-min-height: 480;
+}
+
+.canvas-wrapper {
+    -fx-padding: 24;
+    -fx-background-color: transparent;
+}
+
+.canvas-plant-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);
+}
+
+/* Palette Pane */
+.palette-pane {
+    -fx-background-color: #2a3f2a;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+}
+
+.palette-card {
+    -fx-opacity: 0.9;
+}
+
+.palette-card:hover {
+    -fx-opacity: 1.0;
+}
+
+/* Section Title */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #ffffff;
+}
+
+/* Muted Label */
+.muted-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-font-size: 13px;
+}
+
+/* Light Slider */
+.light-slider {
+    -fx-pref-width: 220;
+}
+
+.light-slider .track {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 4;
+    -fx-pref-height: 6;
+}
+
+.light-slider .thumb {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+}
+
+.light-slider .thumb:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 8, 0, 0, 2);
+}
+
+/* Badge Label */
+.badge-label {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 6 12;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+/* Search Field and Text Fields */
+.search-field {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 16;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+}
+
+.search-field:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.search-field:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Text Field Styles */
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 16;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+}
+
+.text-field:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.text-field:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Text Field Prompt */
+.text-field .prompt-text {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+/* Combo Box Styles */
+.combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 6 10;
+}
+
+.combo-box:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+}
+
+.combo-box:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.combo-box .list-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 8 12;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: #ffffff;
+}
+
+/* Hero Badge */
+.hero-badge {
+    -fx-font-size: 11px;
+    -fx-text-fill: rgba(255, 255, 255, 0.6);
+    -fx-letter-spacing: 2px;
+}
+
+/* Default Button Override - Ensure all buttons follow design system */
+.button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 10 20;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ToggleButton Base Style */
+.toggle-button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: transparent;
+    -fx-padding: 10 20;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: #ffffff;
+}
+
+.toggle-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.toggle-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Label Styles */
+.label {
+    -fx-text-fill: #ffffff;
+}

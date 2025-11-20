@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="boilerplate.desktop.controller.RecommendationsController">
+    <top>
+        <VBox spacing="12" padding="24">
+            <Label text="¿Cuánta luz recibe tu espacio?" styleClass="section-title"/>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Slider fx:id="lightSlider" min="1" max="5" value="3" majorTickUnit="1"
+                        minorTickCount="0" snapToTicks="true" styleClass="light-slider"/>
+                <Label fx:id="levelLabel" text="Nivel: 3/5" styleClass="badge-label"/>
+                <Button fx:id="recommendButton" text="Recomendar Plantas" onAction="#renderRecommendations"
+                        styleClass="primary-pill-button"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <content>
+                <FlowPane fx:id="recommendationContainer" hgap="18" vgap="18" padding="24"
+                          prefWrapLength="900" styleClass="cards-flow"/>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
+

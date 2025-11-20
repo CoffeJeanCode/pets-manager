@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="boilerplate.desktop.controller.PlantCardController"
+      spacing="12" alignment="TOP_CENTER" prefWidth="280" prefHeight="380"
+      styleClass="plant-card">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Plant Image -->
+    <ImageView fx:id="plantImage" fitWidth="240" fitHeight="200" preserveRatio="true"
+               smooth="true" cache="true" styleClass="plant-image"/>
+    
+    <!-- Content -->
+    <VBox spacing="8" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
+        <Label fx:id="nameLabel" text="Calathea plant" styleClass="plant-name"/>
+        <Label fx:id="descriptionLabel" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+               wrapText="true" styleClass="plant-description"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="priceLabel" text="35.9 $" styleClass="plant-price"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="actionButton" styleClass="cart-icon-button">
+                <graphic>
+                    <Label text="🛒" styleClass="cart-icon"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+</VBox>
+

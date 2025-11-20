@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 import static boilerplate.desktop.Resources.*;
-import static boilerplate.desktop.theme.Theme.SUPPORTED_THEMES;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Launcher extends Application {
@@ -30,13 +29,28 @@ public class Launcher extends Application {
         Scene scene = new Scene(mainWindow, 1400, 900);
         
         // Load CSS files using proper resource paths
+        // Load fonts CSS (optional - may not exist)
         try {
-            String fontsCss = getClass().getResource(FONTS_DIR + "index.css").toExternalForm();
-            String stylesCss = getClass().getResource(STYLES_DIR + "index.css").toExternalForm();
-            scene.getStylesheets().addAll(fontsCss, stylesCss);
+            java.net.URL fontsUrl = getClass().getResource(FONTS_DIR + "index.css");
+            if (fontsUrl != null) {
+                scene.getStylesheets().add(fontsUrl.toExternalForm());
+            }
         } catch (Exception e) {
-            // If CSS files don't exist, continue without them (they're optional)
-            System.err.println("Warning: Could not load CSS files: " + e.getMessage());
+            System.err.println("Warning: Could not load fonts CSS: " + e.getMessage());
+        }
+        
+        // Load main styles CSS (required)
+        try {
+            java.net.URL stylesUrl = getClass().getResource(STYLES_DIR + "index.css");
+            if (stylesUrl != null) {
+                scene.getStylesheets().add(stylesUrl.toExternalForm());
+                System.out.println("CSS loaded from: " + stylesUrl.toExternalForm());
+            } else {
+                System.err.println("ERROR: Main styles CSS not found at: " + STYLES_DIR + "index.css");
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR: Could not load main styles CSS: " + e.getMessage());
+            e.printStackTrace();
         }
 
         stage.setScene(scene);
@@ -47,11 +61,6 @@ public class Launcher extends Application {
         stage.setMinHeight(600);
         stage.setOnCloseRequest(t -> Platform.exit());
         
-        // Apply initial theme after scene is set
-        Platform.runLater(() -> {
-            mainWindow.selectTheme(SUPPORTED_THEMES.get(0));
-        });
-
         Platform.runLater(() -> {
             stage.show();
             stage.requestFocus();

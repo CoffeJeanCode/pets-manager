@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="boilerplate.desktop.controller.GardenDesignerController">
+    <left>
+        <VBox spacing="16" prefWidth="320" styleClass="palette-pane">
+            <padding>
+                <Insets top="24" right="16" bottom="24" left="24"/>
+            </padding>
+            <Label text="Elementos" styleClass="section-title"/>
+            <Label text="Haz clic en una tarjeta para añadirla al lienzo. Luego arrástrala."
+                   wrapText="true" styleClass="muted-label"/>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                <content>
+                    <FlowPane fx:id="paletteContainer" hgap="12" vgap="12" prefWrapLength="280"/>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </left>
+    <center>
+        <StackPane styleClass="canvas-wrapper">
+            <AnchorPane fx:id="canvasPane" prefWidth="600" prefHeight="500" styleClass="designer-canvas"/>
+        </StackPane>
+    </center>
+</BorderPane>
+

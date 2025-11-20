@@ -4,6 +4,7 @@ module boilerplate.desktop {
 
     requires java.desktop;
     requires javafx.controls;
+    requires javafx.fxml;
     requires javafx.graphics;
     requires transitive javafx.base;
 
@@ -20,7 +21,8 @@ module boilerplate.desktop {
     exports boilerplate.desktop.models;
     exports boilerplate.desktop.models.dto;
     exports boilerplate.desktop.repositories;
+    exports boilerplate.desktop.controller;
 
-    // resources - these are resource directories, not packages
-    // opens is used for reflection access to resources
+    opens boilerplate.desktop.controller to javafx.fxml;
+    opens boilerplate.desktop.view to javafx.fxml;
 }
